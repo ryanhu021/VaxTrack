@@ -2,6 +2,8 @@ if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
 }
 
+const fs = require('fs');
+
 const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient({
 	keyFilename: process.env.KEY_FILENAME
@@ -19,7 +21,30 @@ const vaccineType = {
  * @returns person object if successful, false if failed
  */
 async function scanVaccineCard(file) {
-	const result = await client.documentTextDetection(file);
+	let img = fs.readFileSync(file);
+	let encoded = Buffer.from(img).toString('base64');
+	const request = {
+		image: {
+			content: encoded
+		},
+		features: [{ type: 'DOCUMENT_TEXT_DETECTION' }],
+		imageContext: {
+			textDetectionParams: [{
+				paragraphFilter: {
+					paths: ['boundingBox', 'lines']
+				}
+			}]
+		}
+	};
+
+	// make request
+	let result;
+	try {
+		result = await client.annotateImage(request);
+	} catch (error) {
+		return false;
+	}
+
 	if (result[0] === undefined || result[0] === null || !result[0].fullTextAnnotation.pages) {
 		return false;
 	}
@@ -137,6 +162,8 @@ async function scanVaccineCard(file) {
 		vaccineType: type,
 		doses: doses
 	};
+
+	console.log(response.fullTextAnnotation.pages[0].blocks[0].paragraphs[0])
 	return person;
 }
 
@@ -152,4 +179,5 @@ function capitalizeFirstLetter(name) {
 	return result;
 }
 
+module.exports = vaccineType;
 module.exports.scanVaccineCard = scanVaccineCard;
