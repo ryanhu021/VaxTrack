@@ -10,13 +10,13 @@ const breaks = {
 	SPACE: 'SPACE',
 	EOL_SURE_SPACE: 'EOL_SURE_SPACE',
 	LINE_BREAK: 'LINE_BREAK'
-}
+};
 
 const vaccineType = {
 	PFIZER: 'pfizer',
 	MODERNA: 'moderna',
 	JANSSEN: 'janssen'
-}
+};
 
 /**
  * Scans a COVID-19 vaccine card
@@ -149,13 +149,25 @@ async function scanVaccineCard(file) {
 		vaccineType: type,
 		doses: doses
 	};
-
+	// response.fullTextAnnotation.pages.forEach((page) => {
+	// 	page.blocks.forEach((block) => {
+	// 		block.paragraphs.forEach((paragraph) => {
+	// 			let textt = '';
+	// 			paragraph.words.forEach((word) => {
+	// 				word.symbols.forEach((symbol) => {
+	// 					textt += symbol.text;
+	// 				});
+	// 			});
+	// 			console.log(String(textt))
+	// 		});
+	// 	});
+	// });
 	return person;
 }
 
 function getLines(pages) {
 	let lines = [];
-	let line = ''
+	let line = '';
 
 	pages.forEach((page) => {
 		page.blocks.forEach((block) => {
@@ -184,7 +196,6 @@ function getLines(pages) {
 			});
 		});
 	});
-
 	return lines;
 }
 
