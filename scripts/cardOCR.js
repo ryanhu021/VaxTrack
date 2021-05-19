@@ -2,18 +2,21 @@ if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
 }
 
-const fs = require('fs');
-
 const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient({
 	keyFilename: process.env.KEY_FILENAME
 });
+const breaks = {
+	SPACE: 'SPACE',
+	EOL_SURE_SPACE: 'EOL_SURE_SPACE',
+	LINE_BREAK: 'LINE_BREAK'
+}
 
 const vaccineType = {
 	PFIZER: 'pfizer',
 	MODERNA: 'moderna',
 	JANSSEN: 'janssen'
-};
+}
 
 /**
  * Scans a COVID-19 vaccine card
@@ -21,26 +24,10 @@ const vaccineType = {
  * @returns person object if successful, false if failed
  */
 async function scanVaccineCard(file) {
-	let img = fs.readFileSync(file);
-	let encoded = Buffer.from(img).toString('base64');
-	const request = {
-		image: {
-			content: encoded
-		},
-		features: [{ type: 'DOCUMENT_TEXT_DETECTION' }],
-		imageContext: {
-			textDetectionParams: [{
-				paragraphFilter: {
-					paths: ['boundingBox', 'lines']
-				}
-			}]
-		}
-	};
-
 	// make request
 	let result;
 	try {
-		result = await client.annotateImage(request);
+		result = await client.documentTextDetection(file);
 	} catch (error) {
 		return false;
 	}
@@ -163,8 +150,42 @@ async function scanVaccineCard(file) {
 		doses: doses
 	};
 
-	console.log(response.fullTextAnnotation.pages[0].blocks[0].paragraphs[0])
 	return person;
+}
+
+function getLines(pages) {
+	let lines = [];
+	let line = ''
+
+	pages.forEach((page) => {
+		page.blocks.forEach((block) => {
+			block.paragraphs.forEach((paragraph) => {
+				paragraph.words.forEach((word) => {
+					word.symbols.forEach((symbol) => {
+						line += symbol.text;
+						if (symbol.property != null && symbol.property.detectedBreak != null) {
+							let breakType = symbol.property.detectedBreak.type;
+							switch (breakType) {
+								case breaks.SPACE:
+									line += ' ';
+									break;
+								case breaks.EOL_SURE_SPACE:
+									line += ' ';
+									lines.push(line);
+									line = '';
+									break;
+								case breaks.LINE_BREAK:
+									lines.push(line);
+									line = '';
+							}
+						}
+					});
+				});
+			});
+		});
+	});
+
+	return lines;
 }
 
 function distance(p1, p2) {

@@ -10,6 +10,8 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 
+const indexRouter = require('./routes/index');
+
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout');
@@ -23,8 +25,6 @@ const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to Mongoose'));
 
-app.get('/', (req, res) => {
-	res.send('david is hot');
-});
+app.use('/', indexRouter);
 
 app.listen(process.env.PORT || 3000);
