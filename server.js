@@ -1,6 +1,3 @@
-// const cardOCR = require('./scripts/cardOCR');
-// cardOCR.scanVaccineCard('./cards/michael.jpg').then((result) => console.log(result));
-
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
 }
@@ -10,7 +7,9 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 
-const indexRouter = require('./routes/index');
+const indexRouter = require('./routes/indexRouter');
+const groupRouter = require('./routes/groupRouter');
+const userRouter = require('./routes/userRouter');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -26,5 +25,7 @@ db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to Mongoose'));
 
 app.use('/', indexRouter);
+app.use('/group', groupRouter);
+app.use('/user', userRouter);
 
 app.listen(process.env.PORT || 3000);
