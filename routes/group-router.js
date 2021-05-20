@@ -6,7 +6,7 @@ const Group = require('../models/group');
 
 // root route
 router.get('/', (req, res) => {
-	res.redirect('login');
+	res.redirect('/');
 });
 
 // new group
@@ -31,17 +31,14 @@ router.post('/new', async (req, res) => {
 		user.password = hashedPassword;
 		await group.save();
 		await user.save();
-		res.render('login');
+		res.render('user/login');
 	} catch (e) {
 		console.log(e);
 		res.render('group/new', { group: group, user: user });
 	}
 });
 
-// verify group
-router.post('/verify', (req, res) => {});
-
-// TEMP ROUTE DELETE LATER
+// manage group
 router.get('/manage', (req, res) => {
 	res.render('group/manage');
 });
