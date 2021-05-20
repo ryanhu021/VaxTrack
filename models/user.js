@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		required: true
 	},
-	role: {
+	role: { // owner, supervisor, or user
 		type: String,
 		required: true
 	},
@@ -21,7 +21,11 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	vaccineType: {
+	password: {
+		type: String,
+		required: true
+	},
+	vaccineType: { // pfizer, modern, or janssen
 		type: String
 	},
 	doses: {

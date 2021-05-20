@@ -1,24 +1,28 @@
 <div class="container">
     <h1 class="mt-4">Create New Group</h1>
-    <div class="mb-4">Enter the name of your company/organization and your information to set up a new group.</div>
-    <form action="/group/verify/" method="POST">
+    <div class="mb-4">Enter the name of your company/organization and your user information to set up a new group.</div>
+    <form action="/group/new/" method="POST">
         <div class="form-group">
             <label for="groupName">Group Name:</label>
-            <input required type="text" name="groupName" id="groupName" class="form-control">
+            <input required type="text" name="groupName" id="groupName" class="form-control" value="<%= group.name %>">
         </div>
         <div class="form-group">
             <label for="firstName">First Name:</label>
-            <input required type="text" name="firstName" id="firstName" class="form-control">
+            <input required type="text" name="firstName" id="firstName" class="form-control" value="<%= user.firstName %>">
         </div>
         <div class="form-group">
             <label for="lastName">Last Name:</label>
-            <input required type="text" name="lastName" id="lastName" class="form-control">
+            <input required type="text" name="lastName" id="lastName" class="form-control" value="<%= user.lastName %>">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input required type="email" name="email" id="email" class="form-control" value="<%= user.email %>">
         </div>
         <div class="form-group mb-4">
-            <label for="email">Email:</label>
-            <input required type="email" name="email" id="email" class="form-control">
+            <label for="password">Password:</label>
+            <input required type="password" name="password" id="password" class="form-control">
         </div>
         <a href="/" class="btn btn-secondary">Back</a>
-        <button type="submit" class="btn btn-primary">Next</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

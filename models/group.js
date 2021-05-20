@@ -8,6 +8,14 @@ const groupSchema = new mongoose.Schema({
     members: {
         type: Number,
         default: 1
+    },
+    fullVax: {
+        type: Number,
+        default: 0
+    },
+    partVax: {
+        type: Number,
+        default: 0
     }
 });
 
