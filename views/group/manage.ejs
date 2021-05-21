@@ -11,16 +11,9 @@
     <% if (count > 0) { %>
         <div class="alert alert-warning"><%= count %> user(s) have requested a supervisor review.</div>
     <% } %>
-    <style>
-        .th-link {
-            color: black;
-            text-decoration: none; 
-            background-color: none;
-        }
-    </style>
     <a href="/user/new/" class="btn btn-success">Add User</a>
-    <a href="/group/import" class="btn btn-info" target="_blank">Import Data</a>
-    <a href="/group/export" class="btn btn-info" target="_blank">Export Data</a>
+    <a href="/group/import" class="btn btn-secondary" target="_blank">Import Data</a>
+    <a href="/group/export" class="btn btn-secondary" target="_blank">Export Data</a>
     <table class="table table-striped table-hover">
         <thead>
             <tr>
