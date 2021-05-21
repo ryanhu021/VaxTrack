@@ -74,7 +74,7 @@ router.get('/manage', checkSuperAuthenticated, async (req, res) => {
 	} catch {
 		res.redirect('/');
 	}
-	res.render('group/manage', { users: users, group: group, role: req.user.role, auth: true });
+	res.render('group/manage', { users: users, group: group, role: req.user.role, auth: true, supervisor: true });
 });
 
 // check if user is supervisor or owner
