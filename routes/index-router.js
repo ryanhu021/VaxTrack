@@ -3,15 +3,10 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
 	if (req.isAuthenticated()) {
-		res.render('index', { user: req.user, auth: true, supervisor: isSuper(req) });
+		res.render('index', { user: req.user, auth: req.isAuthenticated() });
 	} else {
-		res.render('index', { user: null, auth: false });
+		res.render('index', { user: null, auth: req.isAuthenticated() });
 	}
 });
-
-// check if user is supervisor or owner
-function isSuper(req) {
-	return ['supervisor', 'owner'].includes(req.user.role);
-}
 
 module.exports = router;

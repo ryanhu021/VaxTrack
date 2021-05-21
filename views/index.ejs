@@ -1,6 +1,4 @@
 <div class="container">
-    <h1 class="mt-4 mb-4">Welcome<%= user != null ? `, ${user.firstName}!` : ' to VaxTrack!' %></h1>
-    <% if (!auth) { %>
-    <div>If this is your first time here, please sign in to your account. If you are an employer looking to begin, create a group from which you can manage your staff.</div>
-    <% } %>
+    <h1 class="mt-4 mb-4">Welcome <%= user != null ? user.firstName : null %></h1>
+    <h3>Directions</h3>
 </div>
