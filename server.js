@@ -56,6 +56,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// setup method override
+app.use(methodOverride('_method'));
+
 // connect routers
 app.use('/', indexRouter);
 app.use('/group', groupRouter);

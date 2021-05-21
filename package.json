@@ -29,6 +29,7 @@
     "express-ejs-layouts": "^2.5.0",
     "express-flash": "0.0.2",
     "express-session": "^1.17.2",
+    "generate-password": "^1.6.0",
     "method-override": "^3.0.0",
     "mongoose": "^5.12.9",
     "passport": "^0.4.1",
