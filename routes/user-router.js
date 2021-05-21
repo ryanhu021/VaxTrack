@@ -29,7 +29,7 @@ router.post(
 
 // new user page
 router.get('/new', checkSuperAuthenticated, async (req, res) => {
-	res.render('user/new', { user: new User(), auth: true });
+	res.render('user/new', { user: new User(), auth: true, supervisor: true });
 });
 
 // new user action
@@ -52,7 +52,7 @@ router.post(
 // edit user page
 router.get('/edit/:id', checkSuperAuthenticated, async (req, res) => {
 	const user = await User.findById(req.params.id);
-	res.render('user/edit', { user: user, auth: true });
+	res.render('user/edit', { user: user, auth: true, supervisor: true });
 });
 
 // edit user action
@@ -69,7 +69,7 @@ router.put(
 // delete user page
 router.get('/delete/:id', checkSuperAuthenticated, async (req, res) => {
 	const user = await User.findById(req.params.id);
-	res.render('user/delete', { user: user, auth: true });
+	res.render('user/delete', { user: user, auth: true, supervisor: true });
 });
 
 // delete user action
@@ -81,6 +81,12 @@ router.delete('/:id', checkSuperAuthenticated, async (req, res) => {
 	res.redirect(`/group/manage`);
 });
 
+// log out action
+router.delete('/', checkAuthenticated, (req, res) => {
+	req.logOut();
+	res.redirect('/user/login');
+})
+
 // check if user is supervisor or owner
 function checkSuperAuthenticated(req, res, next) {
 	if (req.isAuthenticated() && ['supervisor', 'owner'].includes(req.user.role)) {
@@ -88,6 +94,24 @@ function checkSuperAuthenticated(req, res, next) {
 	}
 
 	res.redirect('/user/login');
+}
+
+// check if user is logged in
+function checkAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+
+	res.redirect('/');
+}
+
+// check if user is not logged in
+function checkNotAuthenticated(req, res, next) {
+	if (!req.isAuthenticated()) {
+		return next();
+	}
+
+	res.redirect('/');
 }
 
 // save user
@@ -109,7 +133,7 @@ function saveUserAndRedirect() {
 			res.redirect(`/group/manage`);
 		} catch (e) {
 			console.log(e);
-			res.render(`user/new`, { user: user, group: await Group.findOne({ _id: req.user.group }), auth: true });
+			res.render(`user/new`, { user: user, group: await Group.findOne({ _id: req.user.group }), auth: true, supervisor: true });
 		}
 	};
 }
@@ -119,15 +143,6 @@ async function generatePassword() {
 	let password = generator.generate({ length: 12, numbers: true });
 	console.log(password);
 	return await bcrypt.hash(password, 10);
-}
-
-// check if user is not logged in
-function checkNotAuthenticated(req, res, next) {
-	if (!req.isAuthenticated()) {
-		return next();
-	}
-
-	res.redirect('/');
 }
 
 module.exports = router;
