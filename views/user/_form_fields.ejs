@@ -1,0 +1,64 @@
+<div class="form-group col-4">
+    <label for="firstName">First Name:</label>
+    <input required value="<%= user.firstName %>" type="text" name="firstName" id="firstName" class="form-control">
+</div>
+<div class="form-group col-4">
+    <label for="lastName">Last Name:</label>
+    <input required value="<%= user.lastName %>" type="text" name="lastName" id="lastName" class="form-control">
+</div>
+<div class="form-group col-4">
+    <label for="email">Email:</label>
+    <input required value="<%= user.email %>" type="email" name="email" id="email" class="form-control">
+</div>
+<div class="form-group col-2 mb-4">
+    <label for="role">Role:</label>
+    <select required name="role" id="role" class="form-select">
+        <% if (user.role !== 'owner') { %>
+            <option <% if (user.role === 'user') { %>
+                selected
+                <% } %> label="User" value="user"></option>
+            <option <% if (user.role === 'supervisor') { %>
+                selected
+                <% } %> label="Supervisor" value="supervisor"></option>
+        <% } else { %>
+            <option selected label="Owner" value="owner"></option>
+        <% } %>
+    </select>
+</div>
+<div class="form-group col-2">
+    <label for="vaccineType">Vaccine Type:</label>
+    <select required name="vaccineType" id="vaccineType" class="form-select">
+        <option <% if (user.vaccineType === 'pfizer') { %>
+            selected
+            <% } %> label="Pfizer" value="pfizer"></option>
+        <option <% if (user.vaccineType === 'moderna') { %>
+            selected
+            <% } %> label="Moderna" value="moderna"></option>
+        <option <% if (user.vaccineType === 'janssen') { %>
+            selected
+            <% } %> label="Janssen (J&J)" value="janssen"></option>
+        <option <% if (user.vaccineType === 'none') { %>
+            selected
+            <% } %> label="None" value="none"></option>
+    </select>
+</div>
+<div class="form-group col-2 mb-4">
+    <label for="doses">Number of Doses:</label>
+    <select required name="doses" id="doses" class="form-select">
+        <% for ( let i = 0; i < 3; i++ ) { %>
+            <% if (user.doses === i) { %>
+                <option selected label="<%= i %>" value="<%= i %>"></option>
+            <% } else { %>
+                <option label="<%= i %>" value="<%= i %>"></option>
+            <% } %>
+        <% } %>
+    </select>
+</div>
+<div class="form-group mb-4">
+    <input class="form-check-input" type="checkbox" value="" name="needReview" id="needReview">
+    <label class="form-check-label" for="needReview">Mark user for review</label>
+</div>
+<div class="form-group mb-4"></div>
+<!-- add image of vax card here -->
+<a href="/group/manage/" class="btn btn-secondary">Cancel</a>
+<button type="submit" class="btn btn-primary">Save</button>
