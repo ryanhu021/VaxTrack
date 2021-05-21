@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,16 +8,10 @@
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <title>VaxTrack</title>
 </head>
-<style>
-    .footorlayout{
-        position: fixed;
-        bottom: 0;
-        left: 0;
-    }
-</style>
-<body>
     <%- include('../partials/header') %>
-    <%- body %>
+    <div class="mb-4">
+        <%- body %>
+    </div>
     <%- include('../partials/footer') %> 
 </body>
 </html>

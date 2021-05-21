@@ -1,0 +1,9 @@
+<div class="container">
+    <h1 class="mt-4">Delete User</h1>
+    <div class="mb-4">Are you sure you would like to delete this user?</div>
+    <h3 class="mb-4"><%= `${user.firstName} ${user.lastName}` %> </h3>
+    <form action="/user/<%= user.id %>?_method=DELETE" method="POST">
+        <a href="/group/manage/" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+</div>
