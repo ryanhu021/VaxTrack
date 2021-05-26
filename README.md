@@ -1,5 +1,6 @@
 # VaxTrack
  AI-powered COVID-19 vaccine tracking and management tool
+ 
  http://vaxtrack.us-west-2.elasticbeanstalk.com/
 ## Environmental variables
  - `KEY_FILENAME`: Google Vision API JSON key
