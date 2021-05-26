@@ -1,5 +1,7 @@
 node_modules
 builds
+cards
 .env
 jenny.js
 ocr-test.js
+turing-valve-312821-3b473c6bb29f.json
