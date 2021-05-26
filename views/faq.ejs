@@ -1,0 +1,10 @@
+<div class="container">
+    <h1 class="mt-4 mb-4">FAQ</h1>
+    <% faq.sections.forEach(section => { %>
+        <h4 class="mb-4"><%= section.title %></h4>
+        <% section.questions.forEach(question => { %>
+            <h5><%= question.question %></h5>
+            <div class="mb-4"><%= question.answer %></div>
+        <% }) %>
+    <% }) %>
+</div>

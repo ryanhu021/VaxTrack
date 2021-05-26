@@ -1,16 +1,13 @@
 <div class="container">
-    <h1 class="mt-4">Manage Group</h1>
-    <div>Group: <%= group.name %></div>
-    <div class="mb-4">Members: <%= group.members %>, Fully Vaccinated: <%= group.fullVax %></div>
-    <% let count = 0 %>
-    <% users.forEach(user => { %>
-        <% if (user.needReview) { %>
-            <% count++ %>
-        <% } %>
-    <% }) %>
-    <% if (count > 0) { %>
-        <div class="alert alert-warning"><%= count %> user(s) have requested a supervisor review.</div>
+    <h1 class="mt-4">Manage Group: <%= group.name %> </h1>
+    <div><%= `Members: ${counts.members}` %></div>
+    <div class="text text-muted"><%= `Fully Vaccinated: ${counts.fullVax} (${(counts.fullVax / counts.members * 100).toFixed(1)}%)` %></div>
+    <div class="text text-muted"><%= `Partially Vaccinated: ${counts.partVax} (${(counts.partVax / counts.members * 100).toFixed(1)}%)` %></div>
+    <div class="text text-muted mb-4"><%= `Not Vaccinated: ${counts.notVax} (${(counts.notVax / counts.members * 100).toFixed(1)}%)` %></div>
+    <% if (counts.needReview > 0) { %>
+        <div class="alert alert-warning"><%= counts.needReview %> user(s) have requested a supervisor review.</div>
     <% } %>
+    <%- include('../partials/error') %>
     <a href="/user/new/" class="btn btn-success">Add User</a>
     <a href="/group/import" class="btn btn-secondary" target="_blank">Import Data</a>
     <a href="/group/export" class="btn btn-secondary" target="_blank">Export Data</a>

@@ -8,7 +8,7 @@ const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
@@ -30,10 +30,13 @@ app.set('layout', 'layouts/layout');
 // setup express
 app.use(expressLayouts);
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ limit: '10mb', extended: false }));
 
 // setup mongoose
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.DATABASE_URL, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true
+});
 const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to Mongoose'));

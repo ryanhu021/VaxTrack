@@ -1,0 +1,9 @@
+<div class="container">
+    <h1 class="mt-4">Your Vaccination Status</h1>
+    <div class="mb-4"><%= `${user.firstName} ${user.lastName}` %></div>
+    <%- include('../partials/error') %>
+    <div>Vaccine Type: <%= user.vaccineType %> </div>
+    <div class="mb-4">Number of Doses: <%= user.doses %> </div>
+    <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+    <a href="/user/update/" class="btn btn-primary">Update Info</a>
+</div>

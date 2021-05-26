@@ -1,0 +1,15 @@
+<div class="container">
+    <h1 class="mt-4">Update Your Vaccination Status</h1>
+    <div class="mb-4"><%= `${user.firstName} ${user.lastName}` %></div>
+    <div>Vaccine Type (updated): <%= user.vaccineType %> </div>
+    <div class="mb-4">Number of Doses (updated): <%= user.doses %> </div>
+    <div>Is the information above correct? If not, please check the box below</div>
+    <form action="/user/confirm" method="POST">
+        <div class="form-group mb-4">
+            <input class="form-check-input" type="checkbox" value="" name="needReview" id="needReview">
+            <label class="form-check-label" for="needReview">Mark for supervisor review</label>
+        </div>
+        <a href="javascript:history.back()" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">Done</button>
+    </form>
+</div>
