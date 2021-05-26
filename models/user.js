@@ -45,6 +45,9 @@ const userSchema = new mongoose.Schema({
 		default: Date.now
 	},
 	vaccineCard: {
+		type: Buffer
+	},
+	vaccineCardType: {
 		type: String
 	},
 	needReview: {
@@ -66,6 +69,14 @@ function updateVaccineStatus(user) {
 	}
 	return 1;
 }
+
+userSchema.virtual('vaccineCardPath').get(function () {
+	if (this.vaccineCard != null && this.vaccineCardType != null) {
+		return `data:${
+			this.vaccineCardType
+		};charset=utf-8;base64,${this.vaccineCard.toString('base64')}`;
+	}
+});
 
 module.exports = mongoose.model('User', userSchema);
 module.exports.updateVaccineStatus = updateVaccineStatus;

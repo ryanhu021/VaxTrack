@@ -20,14 +20,14 @@ const vaccineType = {
 
 /**
  * Scans a COVID-19 vaccine card
- * @param {*} file the image path
+ * @param {*} request the document text detection request (see https://googleapis.dev/nodejs/vision/latest/v1.ImageAnnotatorClient.html#documentTextDetection)
  * @returns person object if successful, false if failed
  */
-async function scanVaccineCard(file) {
+async function scanVaccineCard(request) {
 	// make request
 	let result;
 	try {
-		result = await client.documentTextDetection(file);
+		result = await client.documentTextDetection(request);
 	} catch (error) {
 		return false;
 	}
@@ -149,54 +149,8 @@ async function scanVaccineCard(file) {
 		vaccineType: type,
 		doses: doses
 	};
-	// response.fullTextAnnotation.pages.forEach((page) => {
-	// 	page.blocks.forEach((block) => {
-	// 		block.paragraphs.forEach((paragraph) => {
-	// 			let textt = '';
-	// 			paragraph.words.forEach((word) => {
-	// 				word.symbols.forEach((symbol) => {
-	// 					textt += symbol.text;
-	// 				});
-	// 			});
-	// 			console.log(String(textt))
-	// 		});
-	// 	});
-	// });
+
 	return person;
-}
-
-function getLines(pages) {
-	let lines = [];
-	let line = '';
-
-	pages.forEach((page) => {
-		page.blocks.forEach((block) => {
-			block.paragraphs.forEach((paragraph) => {
-				paragraph.words.forEach((word) => {
-					word.symbols.forEach((symbol) => {
-						line += symbol.text;
-						if (symbol.property != null && symbol.property.detectedBreak != null) {
-							let breakType = symbol.property.detectedBreak.type;
-							switch (breakType) {
-								case breaks.SPACE:
-									line += ' ';
-									break;
-								case breaks.EOL_SURE_SPACE:
-									line += ' ';
-									lines.push(line);
-									line = '';
-									break;
-								case breaks.LINE_BREAK:
-									lines.push(line);
-									line = '';
-							}
-						}
-					});
-				});
-			});
-		});
-	});
-	return lines;
 }
 
 function distance(p1, p2) {
@@ -211,5 +165,4 @@ function capitalizeFirstLetter(name) {
 	return result;
 }
 
-module.exports = vaccineType;
 module.exports.scanVaccineCard = scanVaccineCard;
