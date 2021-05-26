@@ -20,7 +20,8 @@ router.get('/faq', (req, res) => {
 	if (req.isAuthenticated()) {
 		res.render('faq', {
 			auth: true,
-			supervisor: isSuper(req)
+			supervisor: isSuper(req),
+			faq: faq
 		});
 	} else {
 		res.render('faq', { auth: false, faq: faq });
