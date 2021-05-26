@@ -1,0 +1,42 @@
+{
+	"sections": [
+		{
+			"title": "Supervisor/User:",
+			"questions": [
+				{
+					"question": "Q: Why can't I upload a photo of my vaccination record card?",
+					"answer": "A: Please ensure that the photo is either a .jpg, .png, or .gif file. If it is not, there are widely available online photo converters to reach the desired format."
+				},
+                {
+					"question": "Q: Why do I keep getting asked to retake my photo?",
+					"answer": "A: Please ensure that your photo is taken similarly to the example. Have good lighting and minimize motion blur. If the problem persists, please contact your supervisor for assistance."
+				},
+                {
+					"question": "Q: The vaccination information is wrong. How do I fix it?",
+					"answer": "A: For security reasons, you cannot manually change your own vaccination record. Instead, please check the supervisor review box to notify a supervisor to manually review your photo submission. Once clicked, your supervisor will shortly fix your information."
+				}
+			]
+		},
+		{
+			"title": "Owner:",
+			"questions": [
+				{
+					"question": "Q: My employee accidentally lost their password. How do I recover it? ",
+					"answer": "A: Unfortunately, you cannot access an employee's password. To solve this, manually delete the employee's account and create a new one with the same information. This will automatically send an email containing new login information."
+				},
+				{
+					"question": "Q: How do I import a file of employees?",
+					"answer": "A: The import file must be a .csv file. More commonly, you can simply create an Excel Spreadsheet with two columns: employee full names and their email addresses. Then, save it as a .csv file. "
+				},
+				{
+					"question": "Q: I get an error when I try to import an employee list?",
+					"answer": "A: Please ensure that your employees' names and email addresses are accurate and correctly formatted. If you run into any further problems, feel free to reach out to us."
+				},
+				{
+					"question": "Q: How do I open the exported status of my employees?",
+					"answer": "A: The best way to access it is by opening the file with Microsoft Excel. You may also open it through your device's text editor."
+				}
+			]
+		}
+	]
+}
