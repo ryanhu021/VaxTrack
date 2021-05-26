@@ -26,7 +26,7 @@
 				},
 				{
 					"question": "Q: How do I import a file of employees?",
-					"answer": "A: The import file must be a .csv file. More commonly, you can simply create an Excel Spreadsheet with two columns: employee full names and their email addresses. Then, save it as a .csv file. "
+					"answer": "A: The import file must be a .csv file. More commonly, you can simply create an Excel Spreadsheet with three columns: employee first names, last names, and their email addresses. Then, save it as a .csv file. "
 				},
 				{
 					"question": "Q: I get an error when I try to import an employee list?",
