@@ -135,7 +135,19 @@ router.get('/update', checkAuthenticated, (req, res) => {
 // update status action
 router.put('/update/confirm', checkAuthenticated, async (req, res) => {
 	let user = req.user;
-	saveVaccineCard(user, req.body.vaccineCard);
+	try {
+		saveVaccineCard(user, req.body.vaccineCard);
+	} catch {
+		res.render('user/update', {
+			user: user,
+			auth: true,
+			supervisor: isSuper(req),
+			messages: {
+				error: 'Invalid file type. File must be an image'
+			}
+		});
+		return;
+	}
 	const request = {
 		image: {
 			content: user.vaccineCard
@@ -155,7 +167,23 @@ router.put('/update/confirm', checkAuthenticated, async (req, res) => {
 			return;
 		}
 
-		// DO NAME CHECKING HERE
+		// check if names match
+		if (
+			!result.firstName
+				.toLowerCase()
+				.includes(user.firstName.toLowerCase()) ||
+			!result.lastName.toLowerCase().includes(user.lastName.toLowerCase())
+		) {
+			res.render('user/update', {
+				user: user,
+				auth: true,
+				supervisor: isSuper(req),
+				messages: {
+					error: 'Names do not match'
+				}
+			});
+			return;
+		}
 		user.vaccineType = result.vaccineType;
 		user.doses = Math.min(result.doses, 2);
 		user.vaccineStatus = User.updateVaccineStatus(user);
@@ -166,7 +194,7 @@ router.put('/update/confirm', checkAuthenticated, async (req, res) => {
 				user: req.user,
 				auth: true,
 				supervisor: isSuper(req)
-			})
+			});
 		} catch (e) {
 			console.log(e);
 			res.render('user/update', {
@@ -201,7 +229,7 @@ router.post('/confirm', checkAuthenticated, async (req, res) => {
 	}
 	await user.save();
 	res.redirect('/');
-})
+});
 
 // check if user is supervisor or owner
 function checkSuperAuthenticated(req, res, next) {
@@ -242,6 +270,7 @@ function isSuper(req) {
 function saveUserAndRedirect(func) {
 	return async (req, res) => {
 		let user = req.newUser;
+		let oldEmail = user.email;
 		user.firstName = req.body.firstName;
 		user.lastName = req.body.lastName;
 		user.email = req.body.email;
@@ -253,6 +282,20 @@ function saveUserAndRedirect(func) {
 			user.needReview = true;
 		} else {
 			user.needReview = false;
+		}
+
+		// check if email already exists
+		if (oldEmail !== user.email && (await User.findOne({ email: user.email })) != null) {
+			res.render(`user/${func}`, {
+				user: user,
+				group: await Group.findOne({ _id: req.user.group }),
+				auth: true,
+				supervisor: true,
+				messages: {
+					error: 'Email already exists'
+				}
+			});
+			return;
 		}
 
 		try {
@@ -309,6 +352,8 @@ function saveVaccineCard(user, cardEncoded) {
 	if (card != null && imageMimeTypes.includes(card.type)) {
 		user.vaccineCard = new Buffer.from(card.data, 'base64');
 		user.vaccineCardType = card.type;
+	} else {
+		throw 'Invalid file type';
 	}
 }
 

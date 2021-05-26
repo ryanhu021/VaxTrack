@@ -1,13 +1,18 @@
 <div class="container">
     <h1 class="mt-4">Update Your Vaccination Status</h1>
     <div class="mb-4"><%= `${user.firstName} ${user.lastName}` %></div>
-    <div>Vaccine Type: <%= user.vaccineType %> </div>
-    <div class="mb-4">Number of Doses: <%= user.doses %> </div>
+    <div class="mb-4">Please take a picture of your vaccine card. Ensure that the card is taken at a direct angle with good lighting and minimum motion blur.</div>
     <%- include('../partials/error') %>
     <form action="/user/update/confirm?_method=PUT" method="POST">
-        <div>
-            <label for="vaccineCard">Vaccine Card:</label>
-            <input required type="file" name="vaccineCard" id="vaccineCard" class="filepond col-6" accept="image/png, image/gif, image/jpeg">
+        <div class="row">
+            <div class="col">
+                <label for="vaccineCard">Vaccine Card:</label>
+                <input required type="file" name="vaccineCard" id="vaccineCard" class="filepond" accept="image/png, image/gif, image/jpeg">
+            </div>
+            <div class="col">
+                <div>Example:</div>
+                <img src="https://www.nationaljewish.org/NJH/media/Coronavirus/Sample-Vaccination-Card.jpg" alt="Vaccine card example" class="img-card mb-4" style="min-width: 4in;">
+            </div>
         </div>
         <a href="javascript:history.back()" class="btn btn-secondary">Cancel</a>
         <button type="submit" class="btn btn-primary">Confirm</button>
