@@ -52,6 +52,9 @@ async function scanVaccineCard(request) {
 		distance: 99999
 	};
 
+	// "CDC" word
+	let hasCDC = false;
+
 	// find name labels and vaccine type
 	response.fullTextAnnotation.pages.forEach((page) => {
 		page.blocks.forEach((block) => {
@@ -79,11 +82,19 @@ async function scanVaccineCard(request) {
 						case wordText.toLowerCase().includes(vaccineType.JANSSEN):
 							type = vaccineType.JANSSEN;
 							doses++;
+							break;
+						case wordText.toLowerCase().includes('cdc'):
+							hasCDC = true;
 					}
 				});
 			});
 		});
 	});
+
+	// if "CDC" could not be found
+	if (!hasCDC) {
+		return false;
+	}
 
 	// if the first and last name labels could not be fonud
 	if (lBounds === undefined && lParent === undefined && rBounds === undefined && rParent === undefined) {
