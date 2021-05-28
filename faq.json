@@ -4,6 +4,14 @@
 			"title": "Supervisor/User:",
 			"questions": [
 				{
+					"question": "Q: Why do you need my vaccination record card?",
+					"answer": "A: We require users to upload their vaccination record cards to ensure authenticity."
+				},
+				{
+					"question": "Q: What are you doing with my vaccination record card?",
+					"answer": "A: When you upload your vaccination record card, we scan it one time using an optical character recognition system to check for your name and determine your vaccine type. It is then stored securely on our database, which is not publicly accessible. Only you and your group supervisors will be able to view it."
+				},
+				{
 					"question": "Q: Why can't I upload a photo of my vaccination record card?",
 					"answer": "A: Please ensure that the photo is either a .jpg, .png, or .gif file. If it is not, there are widely available online photo converters to reach the desired format."
 				},
