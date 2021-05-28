@@ -1,5 +1,5 @@
 # VaxTrack
- AI-powered COVID-19 vaccine tracking and management tool
+ AI-powered COVID-19 vaccine tracking and management
  
  http://vaxtrack.us-west-2.elasticbeanstalk.com/
 ## Environmental variables
