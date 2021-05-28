@@ -117,6 +117,10 @@ router.get('/manage', checkSuperAuthenticated, async (req, res) => {
 		}
 	});
 	let group;
+	let messages = {};
+	if (req.query.error != null && req.query.error === 'invalidFile') {
+		messages.error = 'Invalid file type';
+	}
 	try {
 		group = await Group.findOne({ _id: req.user.group });
 		res.render('group/manage', {
@@ -125,7 +129,8 @@ router.get('/manage', checkSuperAuthenticated, async (req, res) => {
 			role: req.user.role,
 			auth: true,
 			supervisor: true,
-			counts: counts
+			counts: counts,
+			messages: messages
 		});
 	} catch {
 		res.redirect('/');

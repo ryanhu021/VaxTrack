@@ -302,8 +302,10 @@ router.post(
 				}
 			});
 			fs.unlinkSync(req.file.path);
+			res.redirect('/group/manage');
+		} else {
+			res.redirect('/group/manage?error=invalidFile');
 		}
-		res.redirect('/group/manage');
 	}
 );
 
