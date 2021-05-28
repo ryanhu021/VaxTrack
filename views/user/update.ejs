@@ -1,7 +1,7 @@
 <div class="container">
     <h1 class="mt-4">Update Your Vaccination Status</h1>
     <div class="mb-4"><%= `${user.firstName} ${user.lastName}` %></div>
-    <div class="mb-4">Please take a picture of your vaccine card. Ensure that the card is taken at a direct angle with good lighting and minimum motion blur.</div>
+    <div class="mb-4">Please take a HORIZONTAL picture of your vaccine card. Ensure that the card is taken at a direct angle with good lighting and minimum motion blur.</div>
     <%- include('../partials/error') %>
     <form action="/user/update/confirm?_method=PUT" method="POST">
         <div class="row">

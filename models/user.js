@@ -61,13 +61,13 @@ function updateVaccineStatus(user) {
 	if (user.doses === 0) {
 		return 0;
 	}
-	if (['pfizer', 'moderna'].includes(user.vaccineType)) {
-		if (user.doses === 1) {
-			return 1;
-		}
-		return 2;
+	if (['pfizer', 'moderna'].includes(user.vaccineType) && user.doses === 1) {
+		return 1;
 	}
-	return 1;
+	if (user.vaccineType === 'janssen') {
+		user.doses = 1;
+	}
+	return 2;
 }
 
 userSchema.virtual('vaccineCardPath').get(function () {

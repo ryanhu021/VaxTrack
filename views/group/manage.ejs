@@ -8,11 +8,11 @@
         <div class="alert alert-warning"><%= counts.needReview %> user(s) have requested a supervisor review.</div>
     <% } %>
     <%- include('../partials/error') %>
-    <form action="/group/import/" method="POST" enctype="multipart/form-data">
+    <form action="/user/import/" method="POST" enctype="multipart/form-data">
         <a href="/user/new/" class="btn btn-success">Add User</a>
         <input required type="file" onchange="this.form.submit();" name="import" id="import" accept=".csv" hidden>
         <label for="import" class="btn btn-secondary">Import Data</label>
-        <a href="/group/export" class="btn btn-secondary" target="_blank">Export Data</a>
+        <a href="/user/export" class="btn btn-secondary" target="_blank">Export Data</a>
     </form>
     <div style="overflow-x:auto">
         <table class="table table-striped table-hover">
