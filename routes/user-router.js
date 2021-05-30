@@ -11,7 +11,6 @@ const nodemailer = require('nodemailer');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const readline = require('readline');
 const cardOCR = require('../scripts/card-ocr');
 const User = require('../models/user');
 const Group = require('../models/group');
@@ -251,14 +250,12 @@ router.post(
 	'/import',
 	checkSuperAuthenticated,
 	upload.single('import'),
-	(req, res) => {
+	async (req, res) => {
 		if (req.file != null) {
-			const readInterface = readline.createInterface({
-				input: fs.createReadStream(req.file.path),
-				console: false
-			});
+			// lines
+			let lines = fs.readFileSync(req.file.path, 'utf-8').split('\n');
 
-			readInterface.on('line', async (line) => {
+			for (line of lines) {
 				let columns = line.split(',');
 				if (
 					columns.length === 3 &&
@@ -268,7 +265,9 @@ router.post(
 				) {
 					let user = new User();
 					let pw = await generatePassword();
-					let group = await Group.findOne({ _id: req.user.group });
+					let group = await Group.findOne({
+						_id: req.user.group
+					});
 					user.firstName = columns[0].trim();
 					user.lastName = columns[1].trim();
 					user.email = columns[2].trim();
@@ -300,7 +299,8 @@ router.post(
 						console.log(e);
 					}
 				}
-			});
+			}
+
 			fs.unlinkSync(req.file.path);
 			res.redirect('/group/manage');
 		} else {
