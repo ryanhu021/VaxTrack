@@ -2,7 +2,7 @@
   "name": "vaxtrack",
   "version": "1.0.0",
   "description": "COVID-19 vaccine tracking and management tool",
-  "main": "cardOCR.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "devStart": "nodemon server.js"
@@ -11,7 +11,18 @@
     "type": "git",
     "url": "git+https://github.com/RyanHu021/VaxTrack.git"
   },
-  "author": "",
+  "author": {
+    "name": "Ryan Hu",
+    "email": "ryanhu021@gmail.com",
+    "url": "https://github.com/RyanHu021"
+  },
+  "contributors": [
+    {
+      "name": "David Song",
+      "email": "davidsong.98075@gmail.com",
+      "url": "https://github.com/randofan"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/RyanHu021/VaxTrack/issues"
